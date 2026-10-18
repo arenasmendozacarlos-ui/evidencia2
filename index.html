@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Práctica 1 - Cálculo de IMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 15px;
+            width: 300px;
+            background-color: #f9f9f9;
+        }
+        .row {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 180px;
+            padding: 3px;
+        }
+        button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Práctica 1</h2>
+    <p>Cree una aplicación para el cálculo del Índice de Masa Corporal (IMC).</p>
+
+    <div class="container">
+        <div class="row">
+            <label for="peso">Peso:</label>
+            <input type="number" id="peso" step="0.1">
+        </div>
+        <div class="row">
+            <label for="altura">Altura:</label>
+            <input type="number" id="altura" step="0.01" placeholder="Ej: 1.75">
+        </div>
+        <div class="row">
+            <label for="imc">IMC:</label>
+            <input type="text" id="imc" readonly>
+        </div>
+        <div class="row">
+            <label for="resultado">Resultado:</label>
+            <input type="text" id="resultado" readonly>
+        </div>
+        <button onclick="calcularIMC()">Calcular</button>
+    </div>
+
+    <script>
+        function calcularIMC() {
+            // 1. Obtener los valores ingresados por el usuario
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
+            
+            // Campos de salida
+            const inputIMC = document.getElementById('imc');
+            const inputResultado = document.getElementById('resultado');
+
+            // Validar que se hayan ingresado números válidos y mayores a cero
+            if (isNaN(peso) || isNaN(altura) || altura <= 0 || peso <= 0) {
+                alert("Por favor, ingrese valores válidos para peso y altura.");
+                return;
+            }
+
+            // 2. Calcular el IMC (Fórmula: peso / altura^2)
+            const imc = peso / (altura * altura);
+            
+            // Mostrar el IMC redondeado a dos decimales
+            inputIMC.value = imc.toFixed(2);
+
+            // 3. Clasificar según la tabla de la imagen
+            if (imc < 18.5) {
+                inputResultado.value = "Bajo Peso";
+            } else if (imc >= 18.5 && imc <= 25) {
+                inputResultado.value = "Peso Normal";
+            } else {
+                inputResultado.value = "Sin clasificación";
+            }
+        }
+    </script>
+
+</body>
+</html>
